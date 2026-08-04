@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: faifly-test-task
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:faifly}
+    username: ${DB_USER:faifly}
+    password: ${DB_PASSWORD:faifly}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    locations: classpath:db/migration
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    default-property-inclusion: non_null
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: perf
+  flyway:
+    locations: classpath:db/migration,classpath:db/perf
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    properties:
+      hibernate.format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG

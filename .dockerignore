@@ -1,0 +1,10 @@
+target/
+.git
+.gitignore
+.idea
+.mvn/wrapper/maven-wrapper.jar
+db/dump
+*.md
+.env
+.claude
+.claude-scripts
